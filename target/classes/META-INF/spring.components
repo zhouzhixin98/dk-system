@@ -1,0 +1,6 @@
+#
+#Wed Dec 02 10:48:30 CST 2020
+org.zzx.dksystem.controller.CommonController=org.springframework.stereotype.Component
+org.zzx.dksystem.controller.ManagerController=org.springframework.stereotype.Component
+org.zzx.dksystem.web.AuthImg=javax.servlet.annotation.WebServlet
+org.zzx.dksystem.controller.EmployeeController=org.springframework.stereotype.Component

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zzx.dksystem.dao.PaymentMapper">
+    <insert id="save">
+		insert into payment_inf values
+		(null, #{payMonth}, #{amount}, #{employee.id});
+	</insert>
+    <!-- 使用多表连接查询 -->
+    <select id="findByEmpId" resultMap="paymentMap">
+		select pay.*, emp.*
+		from payment_inf pay
+		join employee_inf emp
+		on pay.emp_id = emp.emp_id
+		where pay.emp_id = #{id}
+	</select>
+    <!-- 使用多表连接查询 -->
+    <select id="findByEmp" resultMap="paymentMap">
+		select pay.*, emp.*
+		from payment_inf pay
+		join employee_inf emp
+		on pay.emp_id = emp.emp_id
+		where pay.emp_id = #{id}
+	</select>
+    <!-- 使用多表连接查询 -->
+    <select id="findByMonthAndEmp" resultMap="paymentMap">
+		select pay.*, emp.*
+		from payment_inf pay
+		join employee_inf emp
+		on pay.emp_id = emp.emp_id
+		where pay.pay_month = #{arg0}
+		and emp.emp_id = #{arg1.id}
+	</select>
+    <!-- 使用多表连接查询 -->
+    <resultMap id="paymentMap" type="payment">
+        <!-- 指定pay_id、pay_month、pay_amount映射
+            到Payment实体的属性 -->
+        <id column="pay_id" property="id"/>
+        <result column="pay_month" property="payMonth"/>
+        <result column="pay_amount" property="amount"/>
+        <!-- 映射关联实体 -->
+        <association property="employee" javaType="employee"
+                     resultMap="org.zzx.dksystem.dao.EmployeeMapper.employeeMap"/>
+    </resultMap>
+    <!-- 开启默认的二级缓存 -->
+    <cache/>
+</mapper>

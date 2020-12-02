@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zzx.dksystem.dao.AttendTypeMapper">
+    <select id="get" resultMap="typeMap">
+		select * from attend_type_inf where type_id = #{id}
+	</select>
+    <select id="findAll" resultMap="typeMap">
+		select * from attend_type_inf
+	</select>
+    <resultMap id="typeMap" type="attendType">
+        <!-- 指定type_id、type_name、amerce_amount映射
+            到AttendType实体的属性 -->
+        <id column="type_id" property="id"/>
+        <result column="type_name" property="name"/>
+        <result column="amerce_amount" property="amerce"/>
+    </resultMap>
+    <!-- 开启默认的二级缓存 -->
+    <cache/>
+</mapper>

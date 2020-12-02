@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zzx.dksystem.dao.AttendMapper">
+    <!-- 根据id获取考勤记录 -->
+    <!-- 使用多表连接查询 -->
+    <select id="get" resultMap="attendMap">
+        select attend.*,type.*,emp.*
+        from attend_inf attend
+        join attend_type_inf type
+        on attend.type_id = type.type_id
+        join employee_inf emp
+        on attend.emp_id = emp.emp_id
+        where attend.attend_id = #{id}
+    </select>
+
+    <!-- 保存考勤记录 -->
+    <insert id="save" parameterType="attend">
+        insert into attend_inf
+        values (null,#{dutyDay},#{punchTime},#{isCome},#{type.id},#{employee.id});
+    </insert>
+
+    <!-- 更新考勤记录 -->
+    <update id="update" parameterType="attend">
+        update attend_inf set
+        duty_day = #{dutyDay},
+        punch_time = #{punchTime},
+        is_come =#{isCome},
+        type_id = #{type.id},
+        emp_id = #{employee.id}
+        where attend_id = #{id};
+    </update>
+
+    <!-- 根据员工、月份查询该员工的考勤记录 -->
+    <!-- 使用多表连接查询 -->
+    <!-- 使用多表连接查询 -->
+    <select id="findByEmpId" resultMap="attendMap">
+		select attend.*, type.*, emp.*
+		from attend_inf attend
+		join attend_type_inf type
+		on attend.type_id = type.type_id
+		join employee_inf emp
+		on attend.emp_id = emp.emp_id
+		where attend.emp_id = #{id}
+	</select>
+    <!-- 使用多表连接查询 -->
+    <select id="findByEmpAndMonth" resultMap="attendMap">
+		select attend.*, type.*, emp.*
+		from attend_inf attend
+		join attend_type_inf type
+		on attend.type_id = type.type_id
+		join employee_inf emp
+		on attend.emp_id = emp.emp_id
+		where emp.emp_id = #{arg0.id}
+		and substring(attend.duty_day, 1, 7) = #{arg1}
+	</select>
+    <!-- 使用多表连接查询 -->
+    <select id="findByEmpAndDutyDay" resultMap="attendMap">
+		select attend.*, type.*, emp.*
+		from attend_inf attend
+		join attend_type_inf type
+		on attend.type_id = type.type_id
+		join employee_inf emp
+		on attend.emp_id = emp.emp_id
+		where emp.emp_id = #{arg0.id}
+		and attend.duty_day = #{arg1}
+	</select>
+    <!-- 使用多表连接查询 -->
+    <select id="findByEmpAndDutyDayAndCome" resultMap="attendMap">
+		select attend.*, type.*, emp.*
+		from attend_inf attend
+		join attend_type_inf type
+		on attend.type_id = type.type_id
+		join employee_inf emp
+		on attend.emp_id = emp.emp_id
+		where emp.emp_id = #{arg0.id}
+		and attend.duty_day = #{arg1}
+		and is_come = #{arg2}
+	</select>
+    <!-- 使用多表连接查询 -->
+    <select id="findByEmpUnAttend" resultMap="attendMap">
+		select attend.*, type.*, emp.*
+		from attend_inf attend
+		join attend_type_inf type
+		on attend.type_id = type.type_id
+		join employee_inf emp
+		on attend.emp_id = emp.emp_id
+		where emp.emp_id = #{arg0.id}
+		and attend.type_id != #{arg1.id}
+		and str_to_date(attend.duty_day, '%Y-%m-%d')
+		between date_sub(now(), interval 3 day) and now();
+	</select>
+    <resultMap id="attendMap" type="attend">
+        <!-- 指定attend_id、duty_day、punch_time、is_come映射
+            到Attend实体的属性 -->
+        <id column="attend_id" property="id"/>
+        <result column="duty_day" property="dutyDay"/>
+        <result column="punch_time" property="punchTime"/>
+        <result column="is_come" property="isCome"/>
+        <!-- 映射关联实体 -->
+        <association property="type" javaType="attendType"
+                     resultMap="org.zzx.dksystem.dao.AttendTypeMapper.typeMap"/>
+        <association property="employee" javaType="Employee"
+                     resultMap="org.zzx.dksystem.dao.EmployeeMapper.employeeMap"/>
+    </resultMap>
+    <!-- 开启默认的二级缓存 -->
+    <cache/>
+</mapper>

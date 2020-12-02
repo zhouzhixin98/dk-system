@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zzx.dksystem.dao.EmployeeMapper">
+    <insert id="save" parameterType="employee">
+		insert employee_inf values (null, 1,
+		#{name}, #{pass}, #{salary}, #{manager.id}, null);
+	</insert>
+    <select id="get" resultMap="employeeMap">
+		select * from employee_inf
+		where emp_id = #{id}
+	</select>
+    <select id="findAll" resultMap="employeeMap">
+		select * from employee_inf
+	</select>
+    <select id="findByNameAndPass" resultMap="employeeMap">
+		select * from employee_inf
+		where emp_name = #{name}
+		and emp_pass = #{pass}
+	</select>
+    <select id="findByName" resultMap="employeeMap">
+		select * from employee_inf
+		where emp_name = #{name}
+	</select>
+    <select id="findByMgrId" resultMap="employeeMap">
+		select * from employee_inf
+		where mgr_id = #{id}
+	</select>
+    <resultMap id="employeeMap" type="employee">
+        <!-- 指定emp_id、emp_name等列映射到employee实体 -->
+        <id column="emp_id" property="id"/>
+        <result column="emp_name" property="name"/>
+        <result column="emp_pass" property="pass"/>
+        <result column="emp_salary" property="salary"/>
+        <!-- 映射关联实体 -->
+        <association property="manager" javaType="manager"
+                     column="emp_id"
+                     select="org.zzx.dksystem.dao.EmployeeMapper.get"
+                     fetchType="lazy"/>
+        <!-- 使用select指定的select语句去抓取关联实体，
+        当前实体的emp_id列的值作为参数传给select语句
+        ofType属性指定关联实体（集合元素）的类型 -->
+        <collection property="attends" javaType="ArrayList"
+                    ofType="attend" column="emp_id"
+                    select="org.zzx.dksystem.dao.AttendMapper.findByEmpId"
+                    fetchType="lazy"/>
+        <!-- 使用select指定的select语句去抓取关联实体，
+        当前实体的emp_id列的值作为参数传给select语句
+        ofType属性指定关联实体（集合元素）的类型 -->
+        <collection property="payments" javaType="ArrayList"
+                    ofType="payment" column="emp_id"
+                    select="org.zzx.dksystem.dao.PaymentMapper.findByEmpId"
+                    fetchType="lazy"/>
+        <!-- 定义辨别者列，列名emp_type -->
+        <discriminator column="emp_type" javaType="int">
+            <!-- 辨别者列的值为2时，使用ManagerMapper的managerMap -->
+            <case value="2"
+                  resultMap="org.zzx.dksystem.dao.ManagerMapper.managerMap"/>
+        </discriminator>
+    </resultMap>
+    <!-- 开启默认的二级缓存 -->
+    <cache/>
+</mapper>

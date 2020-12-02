@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/mvc
+	http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+	<!-- 配置Spring自动扫描指定包及其子包中的所有Bean -->
+	<context:component-scan base-package="org.zzx.dksystem.controller" />
+	<!-- 将/resources/路径下的资源映射为/res/**虚拟路径的资源 -->
+	 <!--<mvc:resources mapping="/res/**" location="" />-->
+	<!-- 将/images/路径下的资源映射为/imgs/**虚拟路径的资源 -->
+	<mvc:resources mapping="/imgs/**" location="/images/" />
+	<mvc:annotation-driven/>
+	<!-- 配置InternalResourceViewResolver作为视图解析器 -->
+	<!-- 指定prefix和suffix属性 -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+		p:prefix="/WEB-INF/content/"
+		p:suffix=".jsp" />
+	<!-- 加载国际化资源文件 -->
+	<bean id="messageSource"  
+		class="org.springframework.context.support.ResourceBundleMessageSource"
+		p:basename="resources" 
+		p:defaultEncoding="utf-8"/>
+	<!-- 定义SimpleMappingExceptionResolver作为异常解析器
+		defaultErrorView配置默认的错误视图名，这意味着所有异常都转到error页面
+		exceptionAttribute配置异常对象的属性名 -->
+	<bean class=
+		"org.springframework.web.servlet.handler.SimpleMappingExceptionResolver"
+		p:defaultErrorView="error"
+		p:exceptionAttribute="ex">
+	</bean>
+	<!-- 对静态资源放行 -->
+
+<!-- 所有拦截器都在该元素内部配置 -->
+<mvc:interceptors>
+	<!-- 每个mvc:interceptor元素配置一个拦截器 -->
+	<mvc:interceptor>
+		<!-- 可定义多个mvc:mapping元素，指定该拦截器要拦截的URL -->
+		<mvc:mapping path="/employeePunch"/>
+		<mvc:mapping path="/employeeCome"/>
+		<mvc:mapping path="/employeeLeave"/>
+		<mvc:mapping path="/viewUnAttend"/>
+		<mvc:mapping path="/appChange-*"/>
+		<mvc:mapping path="/processApp"/>
+		<mvc:mapping path="/viewEmployeeSalary"/>
+		<!-- 定义拦截员工功能的权限拦截器 -->
+		<bean class=
+			"org.zzx.dksystem.controller.interceptor.EmployeeInterceptor"/>
+	</mvc:interceptor>
+	<!-- 每个mvc:interceptor元素配置一个拦截器 -->
+	<mvc:interceptor>
+		<!-- 可定义多个mvc:mapping元素，指定该拦截器要拦截的URL -->
+		<mvc:mapping path="/managerPunch"/>
+		<mvc:mapping path="/managerCome"/>
+		<mvc:mapping path="/managerLeave"/>
+		<mvc:mapping path="/viewManagerSalary"/>
+		<mvc:mapping path="/viewDeptSal"/>
+		<mvc:mapping path="/viewEmps"/>
+		<mvc:mapping path="/viewApps"/>
+		<mvc:mapping path="/addEmp"/>
+		<mvc:mapping path="/processAdd"/>
+		<mvc:mapping path="/checkApp"/>
+		<!-- 定义拦截经理功能的权限拦截器 -->
+		<bean class=
+			"org.zzx.dksystem.controller.interceptor.ManagerInterceptor"/>
+	</mvc:interceptor>
+</mvc:interceptors>
+	<!-- 加载静态资源 -->
+	<mvc:resources location="/images/" mapping="/images/**"/>
+</beans>

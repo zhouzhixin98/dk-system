@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding" native2AsciiForPropertiesFiles="true" defaultCharsetForPropertiesFiles="UTF-8">
+    <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/org/zzx/dksystem/controller/CommonController.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/org/zzx/dksystem/controller/ManagerController.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/org/zzx/dksystem/controller/WebConstant.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/org/zzx/dksystem/controller/interceptor" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/org/zzx/dksystem/dao/ApplicationMapper.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/org/zzx/dksystem/dao/AttendMapper.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/org/zzx/dksystem/dao/AttendTypeMapper.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/org/zzx/dksystem/dao/CheckBackMapper.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/org/zzx/dksystem/dao/EmployeeMapper.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/org/zzx/dksystem/dao/ManagerMapper.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/org/zzx/dksystem/dao/PaymentMapper.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/org/zzx/dksystem/domain/Application.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/org/zzx/dksystem/domain/Attend.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/org/zzx/dksystem/domain/AttendType.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/org/zzx/dksystem/domain/CheckBack.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/org/zzx/dksystem/domain/Employee.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/org/zzx/dksystem/domain/Manager.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/org/zzx/dksystem/domain/Payment.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/org/zzx/dksystem/schedule" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/org/zzx/dksystem/vo/AppBean.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/org/zzx/dksystem/vo/AttendBean.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/org/zzx/dksystem/vo/EmpBean.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/org/zzx/dksystem/vo/PaymentBean.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/org/zzx/dksystem/vo/SalaryBean.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/data.sql" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/log4j2.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/quartz.properties" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/resources_zh_CN.properties" charset="GBK" />
+    <file url="PROJECT" charset="UTF-8" />
+  </component>
+</project>

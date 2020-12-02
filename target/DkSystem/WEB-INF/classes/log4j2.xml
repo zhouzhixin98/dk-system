@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Configuration status="off" monitorInterval="1800">
+	<Appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout pattern="%5p [%t] %logger{36} %m%n"/>
+		</Console>
+	</Appenders>
+	<Loggers>
+		<!-- 全局日志配置 -->
+		<Root level="error">
+			<AppenderRef ref="Console"/>
+		</Root>
+		<!-- MyBatis日志配置，将其设为debug级别 -->
+		<Logger name="org.zzx.dksystem.dao" level="debug"/>
+	</Loggers>
+</Configuration>

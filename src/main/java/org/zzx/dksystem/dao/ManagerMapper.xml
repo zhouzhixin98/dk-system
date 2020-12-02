@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zzx.dksystem.dao.ManagerMapper">
+    <!-- 使用多表连接查询 -->
+    <select id="findByNameAndPass" resultMap="managerMap">
+		select * from employee_inf
+		where emp_type = 2 and
+		emp_name = #{name} and emp_pass = #{pass}
+	</select>
+    <!-- 使用多表连接查询 -->
+    <select id="findByName" resultMap="managerMap">
+		select * from employee_inf
+		where emp_type = 2 and emp_name = #{name}
+	</select>
+    <!-- 指定将结果集映射成Manager对象
+        该结果映射继承了EmployeeMapper的employeeMap，
+        因此它会直接继承employeeMap中定义的子元素 -->
+    <resultMap id="managerMap" type="manager"
+               extends="org.zzx.dksystem.dao.EmployeeMapper.employeeMap">
+        <result column="dept_name" property="dept"/>
+        <!-- 使用select指定的select语句去抓取关联实体，
+        当前实体的emp_id列的值作为参数传给select语句
+        ofType属性指定关联实体（集合元素）的类型 -->
+        <collection property="employees" javaType="ArrayList"
+                    ofType="Employee" column="emp_id"
+                    select="org.zzx.dksystem.dao.EmployeeMapper.findByMgrId"
+                    fetchType="lazy"/>
+        <!-- 使用select指定的select语句去抓取关联实体，
+        当前实体的emp_id列的值作为参数传给select语句
+        ofType属性指定关联实体（集合元素）的类型 -->
+        <collection property="checks" javaType="ArrayList"
+                    ofType="checkBack" column="emp_id"
+                    select="org.zzx.dksystem.dao.CheckBackMapper.findByMgrId"
+                    fetchType="lazy"/>
+    </resultMap>
+    <!-- 开启默认的二级缓存 -->
+    <cache/>
+</mapper>

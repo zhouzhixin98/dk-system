@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zzx.dksystem.dao.CheckBackMapper">
+    <insert id="save">
+		insert checkback_inf values(null, #{app.id},
+		#{result}, #{reason}, #{manager.id});
+	</insert>
+    <!-- 使用多表连接查询 -->
+    <select id="findByMgrId" resultMap="checkBackMap">
+		select check.*, app.*, mgr.*
+		from checkback_inf check
+		join application_inf app
+		on check.app_id = app.app_id
+		join employee_inf mgr
+		on check.mgr_id = mgr.emp_id
+		where check.mgr_id = #{id};
+	</select>
+    <select id="findAppED" resultMap="checkBackMap">
+        select * from checkback_inf
+        where check_result = 1 or check_result = 0;
+    </select>
+    <resultMap id="checkBackMap" type="checkBack">
+        <!-- 指定check_id、check_result、check_reason映射
+            到CheckBack实体的属性 -->
+        <id column="check_id" property="id"/>
+        <result column="check_result" property="result"/>
+        <result column="check_reason" property="reason"/>
+        <!-- 映射关联实体 -->
+        <association property="app" javaType="application"
+                     resultMap="org.zzx.dksystem.dao.ApplicationMapper.applicationMap"/>
+        <association property="manager" javaType="manager"
+                     resultMap="org.zzx.dksystem.dao.ManagerMapper.managerMap"/>
+    </resultMap>
+    <!-- 开启默认的二级缓存 -->
+    <cache/>
+</mapper>
